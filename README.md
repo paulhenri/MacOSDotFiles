@@ -1,4 +1,4 @@
-##DotFiles Repo##
+# DotFiles Repo #
 
 Simple approach based on GNU Stow and a normal Git Repo. Doc can be found here if needed : 
 [Managing dotfiles](https://www.jakewiesler.com/blog/managing-dotfiles)
