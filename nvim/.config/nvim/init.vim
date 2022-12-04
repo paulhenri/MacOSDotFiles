@@ -9,6 +9,16 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'onsails/lspkind-nvim'
 Plug 'alvan/vim-closetag'
 
+" ------------
+" Markdown
+" ------------
+Plug 'godlygeek/tabular'" Tabular plugin is used to format tables
+Plug 'elzr/vim-json' " JSON front matter highlight plugin
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+
 "Git Blame
 Plug 'f-person/git-blame.nvim'
 Plug 'tpope/vim-fugitive' "More infos about branches etc...
@@ -24,6 +34,7 @@ Plug 'cloudhead/neovim-fuzzy'
 
 " GUI enhancement
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'https://github.com/sainnhe/sonokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
@@ -48,13 +59,18 @@ set rnu
 
 " Themings informations - Now using palenight
 set background=dark
-colorscheme palenight
+
+" The configuration options should be placed before `colorscheme sonokai`.
+"let g:sonokai_style = 'atlantis'
+"let g:sonokai_better_performance = 1
+
+colorscheme tokyonight-storm
 
 "Italics - Advice of palenight ==> Perfect !
 let g:palenight_terminal_italics=1
 
 " Customization of the light ligne and the airline
-let g:lightligne = {'colorscheme': 'palenight'}
+let g:lightligne = {'colorscheme': 'tokyonight'}
 let g:airline_theme = "palenight"
 
 " To enable true colors -- Thanks to palenight for the code
@@ -372,6 +388,33 @@ map <C-K> :bnext<CR>
 set shiftwidth=2
 
 command Fmtjson :%!jq '.'  
+
+
+" -----------------------
+" Markdown Specific
+" -----------------------
+" disable header folding
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation is not so good
+let g:vim_markdown_conceal = 0
+
+" disable math tex conceal feature
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+
+" support front matter of various format
+let g:vim_markdown_frontmatter = 1  " for YAML format
+let g:vim_markdown_toml_frontmatter = 1  " for TOML format
+let g:vim_markdown_json_frontmatter = 1  " for JSON format
+
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
+
+let g:mkdp_auto_close = 0
+
+nnoremap <M-m> :MarkdownPreview<CR>
 
 " -----------------
 "  Elixir speficic 
