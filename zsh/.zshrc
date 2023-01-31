@@ -101,3 +101,4 @@ source $HOME/.aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 eval "$(direnv hook zsh)"
+. "/Users/paul-henribonnement/.acme.sh/acme.sh.env"

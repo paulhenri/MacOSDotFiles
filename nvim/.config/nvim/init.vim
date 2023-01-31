@@ -173,8 +173,15 @@ lspconfig.elixirls.setup({
       -- I also choose to turn off the auto dep fetching feature.
       -- It often get's into a weird state that requires deleting
       -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false
+      fetchDeps = false 
+    },
+  files = {
+      trimTrailingWhiteSpace = true
+    },
+  editor = {
+      formatOnSave = true
     }
+
   }
 })
 
@@ -415,6 +422,14 @@ augroup END
 let g:mkdp_auto_close = 0
 
 nnoremap <M-m> :MarkdownPreview<CR>
+
+lua <<EOF
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
+
+EOF
 
 " -----------------
 "  Elixir speficic 

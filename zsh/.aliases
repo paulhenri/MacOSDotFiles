@@ -12,6 +12,9 @@ alias digi="cd ~/Code/Digiforma"
 # Shortcuts
 alias g="git"
 
+# Fetch branches and pull
+alias gupdate="git fetch && git fetch --prune && git fetch --prune-tags && git pull"
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
