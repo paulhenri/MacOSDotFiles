@@ -1,4 +1,5 @@
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
+"call plug#begin()
 
 " General Programming Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -17,7 +18,7 @@ Plug 'elzr/vim-json' " JSON front matter highlight plugin
 Plug 'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }}
+Plug 'junegunn/goyo.vim' "DistrictionFreeMode - To be tried...
 
 "Git Blame
 Plug 'f-person/git-blame.nvim'
@@ -26,11 +27,9 @@ Plug 'tpope/vim-fugitive' "More infos about branches etc...
 "Rust
 Plug 'simrat39/rust-tools.nvim'
 
-"Elixir
-Plug 'elixir-editors/vim-elixir'
-
-"FuzzySearch
-Plug 'cloudhead/neovim-fuzzy'
+"Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
 " GUI enhancement
 Plug 'drewtempelmeyer/palenight.vim'
@@ -41,7 +40,7 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'akinsho/bufferline.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-
+Plug 'tanvirtin/monokai.nvim'
 "Neovim Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -60,11 +59,8 @@ set rnu
 " Themings informations - Now using palenight
 set background=dark
 
-" The configuration options should be placed before `colorscheme sonokai`.
-"let g:sonokai_style = 'atlantis'
-"let g:sonokai_better_performance = 1
-
-colorscheme tokyonight-storm
+colorscheme monokai_ristretto
+"colorscheme tokyonight-storm
 
 "Italics - Advice of palenight ==> Perfect !
 let g:palenight_terminal_italics=1
@@ -103,7 +99,7 @@ require("nvim-treesitter.configs").setup(
             "surface",
             "javascript",
 	    "rust"
-        }, 
+        },
         highlight = {enable = true},
 	auto_install = true,
 
@@ -173,7 +169,7 @@ lspconfig.elixirls.setup({
       -- I also choose to turn off the auto dep fetching feature.
       -- It often get's into a weird state that requires deleting
       -- the .elixir_ls directory and restarting your editor.
-      fetchDeps = false 
+      fetchDeps = false
     },
   files = {
       trimTrailingWhiteSpace = true
@@ -186,7 +182,7 @@ lspconfig.elixirls.setup({
 })
 
 
---TerraformLSP 
+--TerraformLSP
 require'lspconfig'.terraformls.setup{}
 
 END
@@ -248,7 +244,7 @@ require'nvim-tree'.setup {
        empty = "",
        empty_open = "",
        symlink = "",
-       symlink_open = "",  
+       symlink_open = "",
 	}
       }
     }
@@ -286,7 +282,6 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 30,
-    height = 30,
     hide_root_folder = false,
     side = 'left',
     preserve_window_proportions = false,
@@ -379,8 +374,13 @@ let g:mix_format_on_save = 1
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
 inoremap <silent> <C-S>         <C-O>:update<CR>
-nnoremap <C-p> :FuzzyOpen<CR>
-nnoremap <S-f> :FuzzyGrep<CR>
+
+" Telescope mapping to emulate what VsCode is doing, there might be something
+" better to do here but these are the shortcuts i have in mind...
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <S-f> <cmd>Telescope live_grep<cr>
+nnoremap <C-f> <cmd>Telescope buffers<cr>
+nnoremap <C-h> <cmd>Telescope help_tags<cr>
 
 " move among buffers with CTRL
 map <C-J> :bprev<CR>
@@ -394,7 +394,7 @@ map <C-K> :bnext<CR>
 " ----------------------
 set shiftwidth=2
 
-command Fmtjson :%!jq '.'  
+command Fmtjson :%!jq '.'
 
 
 " -----------------------
@@ -414,11 +414,15 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_frontmatter = 1  " for YAML format
 let g:vim_markdown_toml_frontmatter = 1  " for TOML format
 let g:vim_markdown_json_frontmatter = 1  " for JSON format
-
+set completeopt=menuone,noinsert,noselect
 augroup pandoc_syntax
     au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 augroup END
 
+function OpenMarkdownPreview (url)
+    execute "open /Applications/Firefox.app" . a:url
+  endfunction
+  let g:mkdp_browserfunc = 'OpenMarkdownPreview'
 let g:mkdp_auto_close = 0
 
 nnoremap <M-m> :MarkdownPreview<CR>
@@ -432,7 +436,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 EOF
 
 " -----------------
-"  Elixir speficic 
+"  Elixir speficic
 "  ----------------
 syntax on
 filetype plugin indent on

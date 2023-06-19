@@ -5,15 +5,16 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 alias digi="cd ~/Code/Digiforma"
-
+alias git_merge_back_master_to_develop='git checkout master;git pull; git checkout develop; git pull; git merge --no-ff --no-edit master;git push origin develop'
 # Shortcuts
 alias g="git"
+alias nvim="~/nvim/bin/nvim"
+
 
 # Fetch branches and pull
-alias gupdate="git fetch && git fetch --prune && git fetch --prune-tags && git pull"
+alias gupdate="git fetch && git fetch --prune && git fetch --prune-tags --force && git pull"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
