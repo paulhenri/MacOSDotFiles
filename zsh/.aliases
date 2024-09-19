@@ -16,6 +16,11 @@ alias nvim="~/nvim/bin/nvim"
 # Fetch branches and pull
 alias gupdate="git fetch && git fetch --prune && git fetch --prune-tags --force && git pull"
 
+alias gsave="git add . && git commit -m 'save' --no-verify"
+alias gresume="git reset --soft HEAD~1"
+
+alias release_digi="gh workflow run prod_release.yml -f force-deploy=false --ref master"
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -50,8 +55,12 @@ alias sudo='sudo '
 alias week='date +%V'
 
 #SSH Shortcuts
-alias admin_bn='ssh ubuntu@34.244.64.253'
-alias local.run='ssh -i ~/.ssh/awfus_ie.pem -R 80:localhost:4000 localhost.run'
+alias admin_bn='ssh -i ~/.ssh/paulhenri ubuntu@34.244.64.253'
+
+#SSH Dokku
+alias sshdokku='ssh -i ~/.ssh/dokku_rsa.pem ubuntu@3.248.118.62'
 
 # Check project before push
 alias check_push='mix format; mix gettext.extract; mix credo --strict --only warning,consistency'
+
+alias python='python3'

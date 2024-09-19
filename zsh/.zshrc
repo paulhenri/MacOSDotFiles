@@ -102,3 +102,4 @@ source $HOME/.aliases
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 eval "$(direnv hook zsh)"
 . "/Users/paul-henribonnement/.acme.sh/acme.sh.env"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
